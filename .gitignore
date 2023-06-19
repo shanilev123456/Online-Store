@@ -1,3 +1,0 @@
-//The .gitignore file is telling Git to ignore the node_modules directory
-//and the .env file when committing changes, 
-//since we usually don't want to include these in our version control.
