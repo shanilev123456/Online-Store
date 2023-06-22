@@ -1,0 +1,40 @@
+<!-- This file is used to render a form for creating a new product -->
+<form action="/products" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price">
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description"></textarea>
+
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category">
+
+    <button type="submit">Create</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('form').submit(function(event) {
+      event.preventDefault();
+
+      var formData = $(this).serialize();
+
+      $.ajax({
+        url: '/products',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+          // Handle the success response
+          console.log(response);
+        },
+        error: function(error) {
+          // Handle the error response
+          console.log(error);
+        }
+      });
+    });
+  });
+</script>

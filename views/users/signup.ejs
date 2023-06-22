@@ -1,0 +1,38 @@
+<!-- views/signup.ejs -->
+<h1>signup</h1>
+<form id="signupForm" method="POST">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <input id="signupBtn" type="submit" value="Signup">
+</form>
+<!-- Include the jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#signupForm').submit(function(event) {
+      event.preventDefault();
+
+      var formData = {
+        'username': $('#username').val(),
+        'password': $('#password').val()
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: '/users/signup',
+        data: formData,
+        dataType: 'json',
+        encode: true
+      }).done(function(data) {
+        console.log(data);
+        // Handle the response here
+      });
+    });
+  });
+</script>

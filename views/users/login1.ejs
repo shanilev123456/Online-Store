@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>login form</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/login-form-styles.css">
+    <link rel="stylesheet" href="assets/css/login-form.css">
+</head>
+
+<body>
+    <div class="container full-height">
+        <div class="row flex center v-center full-height">
+            <div class="col-sm-4 col-xs-8">
+                <div class="form-box">
+                    <form>
+                        <fieldset>
+                            <legend>Sign in</legend><img id="avatar" class="avatar round" src="assets/img/avatar.png"><input class="form-control" type="email" id="username" name="username" placeholder="username"><input class="form-control" type="password" id="password" name="password" placeholder="password"><button class="btn btn-primary btn-block" type="button">LOGIN </button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+<!------------------------------------------------------------------------------------------------------------------------------->
+
+<!---The new Code---->
+<!-- views/login.ejs -->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Login</title>
+    <!-- Add the bootstrap CSS here -->
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/login-form-styles.css">
+    <link rel="stylesheet" href="/assets/css/login-form.css">
+</head>
+
+<body>
+    <div class="container full-height">
+        <div class="row flex center v-center full-height">
+            <div class="col-sm-4 col-xs-8">
+                <div class="form-box">
+                    <form id="loginForm" method="POST" action="/users/login">
+                        <fieldset>
+                            <legend>Sign in</legend>
+                            <img id="avatar" class="avatar round" src="/assets/img/avatar.png" />
+                            <input id="username" class="form-control" type="text" name="username" placeholder="username" required />
+                            <input id="password" class="form-control" type="password" name="password" placeholder="password" required />
+                            <button id="loginBtn" class="btn btn-primary btn-block" type="submit">LOGIN </button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Include the jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include the bootstrap JS library -->
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').submit(function(event) {
+                event.preventDefault();
+
+                var formData = {
+                    'username': $('#username').val(),
+                    'password': $('#password').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/users/login',
+                    data: formData,
+                    dataType: 'json',
+                    encode: true
+                }).done(function(data) {
+                    console.log(data);
+                    // Handle the response here
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+<!--Explanation of changes:
+
+Updated the paths for CSS and image files to use the proper routes in Express. Added a / before the asset paths to make them absolute paths.
+
+Changed the form tag to include method="POST" and action="/users/login" attributes to submit the form data to the correct route in Express.
+
+Adjusted the jQuery library source path to use the CDN link directly.
+
+Changed the script source for the Bootstrap JS file to use the correct route in Express.
+
+Please make sure that the assets (CSS, images, JavaScript) are served correctly by your Express app so that they can be accessed by the client.
+
+
+content here -->
+
