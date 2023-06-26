@@ -1,3 +1,212 @@
-<!--This assumes you are storing the logged-in user's username in req.session.username 
-- now we need to adjust this depending on how we are handling sessions.-->
-<h1>Welcome, <%= username %></h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Pretty Product List</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/FontAwesome.css">
+    <link rel="stylesheet" href="assets/css/Glyphicons%20Halflings.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/css/Pretty-Product-List.css">
+    <link rel="stylesheet" href="assets/css/Animated-Type-Heading.css">
+    <link rel="stylesheet" href="assets/css/Button-Hover-Animate.css">
+</head>
+
+<body>
+    <div class="row product-list" style="margin: 15px;">
+        <div class="caption v-middle text-center">
+            <h1 class="cd-headline clip">
+                <span class="blc">My | </span>
+                <span class="cd-words-wrapper">
+                    <b class="is-visible">imaginary.</b>
+                    <b>Creative.</b>
+                    <b>Online Store</b>
+                </span>
+            </h1>
+        </div>
+        <div class="col-sm-6 col-md-4 product-item">
+            <div class="product-container">
+                <div class="row">
+                    <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/iphone6.jpg"></a></div>
+                </div>
+                <div class="row" style="height: 49;">
+                    <div class="col-xs-8" style="height: 69px;">
+                        <h2><a href="#">iPhone 14s</a></h2>
+                    </div>
+                </div>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <a class="small-text" href="#">82 reviews&nbsp; &nbsp;&nbsp;</a>
+                    <i class="fa fa-facebook-square"></i>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="product-description"><br>New iPhone, good price!</p>
+                        <div class="row">
+                            <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
+                            <div class="col-xs-6">
+                                <p class="product-price">$600</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 product-item">
+            <div class="product-container">
+                <div class="row">
+                    <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/mouse.jpeg"></a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
+                        <h2>Dell M300<a href="#"><br><br></a></h2>
+                    </div>
+                </div>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <a class="small-text" href="#">10 reviews</a>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="product-description"><br>Bluetooth, good one</p>
+                        <div class="row">
+                            <div class="col-xs-6"><button class="btn btn-default" type="button">Add to Cart</button></div>
+                            <div class="col-xs-6">
+                                <p class="product-price">$20</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3" style="font-size: 10px;">
+            <% if(user) { %>
+                <p>Welcome, <%= user.username %></p>
+                <a href="/logout" class="btn btn-light switchhover1" type="button" style="margin: 20px;">Logout</a>
+            <% } else { %>
+                <a href="/login" class="btn btn-light switchhover1" type="button" style="margin: 20px;">Login</a>
+                <a href="/signup" class="btn btn-light switchhover1" type="button" style="margin: 20px;">Sign Up</a>
+            <% } %> 
+        </div>
+        <div class="col-sm-6 col-md-4 product-item">
+            <div class="product-container">
+                <div class="row">
+                    <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/screen.jpg"></a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
+                        <h2><a href="#">Lcd Screen</a></h2>
+                    </div>
+                </div>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <a class="small-text" href="#">10 reviews</a>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="product-description">4K</p>
+                        <div class="row">
+                            <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
+                            <div class="col-xs-6">
+                                <p class="product-price">$100</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 product-item">
+            <div class="product-container">
+                <div class="row">
+                    <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/laptop.jpg"></a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
+                        <h2><a href="#">Dell Laptop</a></h2>
+                    </div>
+                </div>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <a class="small-text" href="#">20 reviews</a>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="product-description">i7, 2 cores</p>
+                        <div class="row">
+                            <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
+                            <div class="col-xs-6">
+                                <p class="product-price">$800</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 product-item">
+            <div class="product-container">
+                <div class="row">
+                    <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/ipad.jpg"></a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
+                        <h2><a href="#">Apple Ipad</a></h2>
+                    </div>
+                </div>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <a class="small-text" href="#">10 reviews</a>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="product-description">This is our description</p>
+                        <div class="row">
+                            <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
+                            <div class="col-xs-6">
+                                <p class="product-price">$600</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 product-item">
+            <div class="product-container">
+                <div class="row">
+                    <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/charge.webp"></a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
+                        <h2><a href="#">Iphone Charge</a></h2>
+                    </div>
+                </div>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <a class="small-text" href="#">8 reviews</a>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="product-description">This is our description</p>
+                        <div class="row">
+                            <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
+                            <div class="col-xs-6">
+                                <p class="product-price">$15</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/Animated-Type-Heading-type-headline.js"></script>
+</body>
+
+</html>
