@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../public/assets/css/Order.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container-fluid my-5 d-flex justify-content-center">
+        <div class="card card-1">
+            <div class="card-header bg-white">
+                <div class="media flex-sm-row flex-column-reverse justify-content-between">
+                    <div class="col my-auto">
+                        <h4 class="mb-0">Orders<span class="change-color"></span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body mt-4">
+                <div class="row">
+                    <div class="col">
+                        <div class="card card-2">
+                            <div class="card-body">
+                                <ul class="order-items" id="order-items">
+                                    <!-- Order items go here -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="jumbotron-fluid">
+                        <div class="row justify-content-between ">
+                            <div class="col-auto my-auto "><h2 class="mb-0 font-weight-bold"style="margin-top: -5px;">TOTAL</h2></div>
+                            <div class="col-auto my-auto ml-auto"><h1 class="display-3" id="total-paid"></h1></div>
+                            <a href="storeuser.html" class="button" id="buy-button">Buy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+$(document).ready(function() {
+    var cartItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+    var totalPaidElement = document.getElementById('total-paid');
+    var orderItemsContainer = document.getElementById('order-items');
+    var buyButton = document.getElementById('buy-button');
+
+    function updateOrder() {
+        var totalPrice = cartItems.reduce(function(total, item) {
+            return total + item.price;
+        }, 0);
+        totalPaidElement.textContent = '$' + totalPrice.toFixed(2);
+
+        orderItemsContainer.innerHTML = '';
+        cartItems.forEach(function(item) {
+            var itemElement = document.createElement('i');
+            itemElement.innerHTML = `
+                <div class="media">
+                    <div class="sq align-self-center">
+                        <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="${item.image}" width="50px" height="50px" />
+                    </div>
+                    <div class="media-body my-auto text-right">
+                        <div class="row my-auto flex-column flex-md-row">
+                            <div class="col my-auto">
+                                <h6 class="mb-0">${item.name}</h6>
+                            </div>
+                            <div class="col my-auto">
+                                <small>Qty: ${item.quantity}</small>
+                            </div>
+                            <div class="col my-auto">
+                                <h6 class="mb-0">$${item.price}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-1"> <!-- Add a line -->
+            `;
+            orderItemsContainer.appendChild(itemElement);
+        });
+    }
+
+    updateOrder();
+
+    // Clear the order items from localStorage after displaying them
+    localStorage.removeItem('orderItems');
+
+    // Add event listener to the "Buy" button
+    buyButton.addEventListener('click', function() {
+        // Add the items to the Order History
+        var orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+        cartItems.forEach(function(item) {
+            orderHistory.push(item);
+        });
+        localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+        // Redirect to storeuser.html
+        window.location.href = 'storeuser.html';
+    });
+});
+
+
+    </script>
+</body>
+
+</html>
