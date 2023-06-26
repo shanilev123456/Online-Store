@@ -5,8 +5,21 @@ const path = require('path');
 const fs = require('fs');
 require('dotenv').config(); // Load environment variables from a .env file into process.env
 
+const session = require('express-session');
+
 // Instantiate an express app
 const app = express();
+
+const userController = require('./controllers/userController');
+
+app.use(
+  session({
+    secret: 'Ri0505838397o',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
 
 app.use(
   "/css",
@@ -50,23 +63,49 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
 
+// Middleware to check if user is logged in
+function checkLoggedIn(req, res, next) {
+  if (req.session.user) {
+    // User is logged in
+    next(); // Proceed to the next middleware or route handler
+  } else {
+    // User is not logged in, redirect to the login page
+    res.redirect('/login');
+  }
+}
+
 // handle these routes in Express application
 app.get('/signup', (req, res) => {
-  res.render('signup');
+  res.render('users/signup', { user: req.session.user });
 });
+
+app.post('/signup', userController.createUser);
 
 app.get('/login', (req, res) => {
-  res.render('login');
+  res.render('users/login');
 });
 
-// After a user logs in, we can display their username by passing it to the EJS template:
-app.get('/user', (req, res) => {
-  res.render('user', { username: req.session.username });
+// Protected route: only accessible if user is logged in
+app.get('/admin', checkLoggedIn, checkAdmin, (req, res) => {
+  res.render('users/admin');
 });
 
-// Route handler for the root URL
-app.get("/", (req, res) => {
-  res.render("Store");
+app.get('/user', checkLoggedIn, (req, res) => {
+  res.render('user', { user: req.session.user });
+});
+
+// Middleware to check if user is an admin
+function checkAdmin(req, res, next) {
+  if (req.session.user && req.session.user.isAdmin) {
+      next();
+  } else {
+      res.status(403).json({ error: 'You do not have admin access' });
+  }
+}
+
+app.get('/', (req, res) => {
+  const user = req.session.user; // Get the user object from the session
+  res.render('Store', { user }); // Pass the user object to the view
 });
 
 // Start the server and listen on port 5500
