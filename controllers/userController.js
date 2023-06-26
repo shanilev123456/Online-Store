@@ -4,19 +4,59 @@ const User = require('../models/userModel');
 // Import bcrypt to hash passwords
 const bcrypt = require('bcryptjs');
 
-// Function to create a new user
 exports.createUser = async (req, res) => {
-    try {
-        const { username, password } = req.body; // Get the username and password from the request body
-        const hashedPassword = await bcrypt.hash(password, 8); // Hash the password
-        const newUser = new User({ username, password: hashedPassword }); // Create a new user instance with the username and hashed password
-        await newUser.save(); // Save the user to the database
+  try {
+    const { username, password } = req.body;
+    console.log('Received username:', username);
+    console.log('Received password:', password);
 
-        res.status(201).json({ message: 'User created successfully' }); // Respond with a success message
+    // Check if the user already exists
+    const userExists = await User.findOne({ username });
+    console.log('User exists:', userExists);
+
+    if (userExists) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 8);
+    const newUser = new User({ username, password: hashedPassword });
+    console.log('New user:', newUser);
+
+    await newUser.save();
+
+    req.session.user = newUser;
+
+    // Redirect to the Store page after successful signup
+    res.redirect('/');
+
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ error: 'Failed to create user' });
+  }
+};
+
+// Function to render the signup form
+exports.signupForm = (req, res) => {
+    res.render('users/signup');
+};
+
+exports.signup = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        // Check if the user already exists
+        const userExists = await User.findOne({ username });
+        if(userExists) {
+            return res.status(400).json({ error: 'Username already exists' });
+        }
+        const hashedPassword = await bcrypt.hash(password, 8);
+        const newUser = new User({ username, password: hashedPassword });
+        await newUser.save();
+        res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create user' }); // If there's an error, respond with an error message
+        res.status(500).json({ error: 'Failed to create user' });
     }
 };
+
 
 // Function to update a user
 exports.updateUser = async (req, res) => {
@@ -57,36 +97,30 @@ exports.getUser = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
+        const { username, password } = req.body;
         // Find the user by their username
-        const user = await User.findOne({ username: req.body.username });
+        const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
         // Check if the provided password matches the stored password
-        const isMatch = await bcrypt.compare(req.body.password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ message: 'Incorrect password' });
         }
 
-        // If the password matches, log the user in (how you do this will depend on your setup)
+        // If the password matches, log the user in by storing user information in the session
         req.session.user = user;
 
-        res.json({ message: 'Logged in successfully' });
+        // Redirect the user to the appropriate page based on their role
+        if (user.isAdmin) {
+            res.redirect('/admin');
+        } else {
+            res.redirect('/user');
+        }
     } catch (error) {
         res.status(500).json({ error: 'Error logging in' });
-    }
-};
-
-exports.signup = async (req, res) => {
-    try {
-        const { username, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 8);
-        const newUser = new User({ username, password: hashedPassword });
-        await newUser.save();
-        res.status(201).json({ message: 'User created successfully' });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to create user' });
     }
 };
 
