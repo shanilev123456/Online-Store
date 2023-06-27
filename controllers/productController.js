@@ -1,4 +1,4 @@
-const Product = require('../models/Product');
+const Product = require('../models/productModel');
 
 // Display the form for creating a new Product
 exports.newProductForm = function (req, res) {
@@ -7,19 +7,23 @@ exports.newProductForm = function (req, res) {
 
 // Create a new Product
 exports.createProduct = async function (req, res) {
-    const product = new Product(req.body);
+    const product = new Product({
+      name: req.body.name,
+      price: req.body.price,
+      quantity: req.body.quantity
+    });
     try {
-        await product.save();
-        res.redirect('/products');
+      await product.save();
+      res.redirect('/products');
     } catch (error) {
-        res.status(400).render('error', { error });
+      res.status(400).render('error', { error });
     }
 };
 
 // Fetch all Products
 exports.getAllProducts = async function (req, res) {
     try {
-        const products = await Product.find().populate('name');
+        const products = await Product.find();
         res.render('products/index', { products });
     } catch (error) {
         res.status(500).render('error', { error });
@@ -29,7 +33,7 @@ exports.getAllProducts = async function (req, res) {
 // Fetch a Product by Id
 exports.getProductById = async function (req, res) {
     try {
-        const product = await Product.findById(req.params.id).populate('name');
+        const product = await Product.findById(req.params.id);
         if (!product) {
             return res.status(404).render('error', { error: 'Product not found' });
         }
