@@ -19,26 +19,30 @@
 </head>
 
 <body>
-    <div class="row product-list" style="margin: 15px;">				<div class="caption v-middle text-center">
-					<h1 class="cd-headline clip">
-			            <span class="blc">My | </span>
-			            <span class="cd-words-wrapper">
-			              <b class="is-visible">imaginary.</b>
-			              <b>Creative.</b>
-			              <b>Online Store</b>
-			            </span>
-	          		</h1>
-				</div>
+    <div class="row product-list" style="margin: 15px;">
+        <div class="caption v-middle text-center">
+            <h1 class="cd-headline clip">
+                <span class="blc">My | </span>
+                <span class="cd-words-wrapper">
+                    <b class="is-visible">imaginary.</b>
+                    <b>Creative.</b>
+                    <b>Online Store</b>
+                </span>
+            </h1>
+        </div>
         <div class="col-sm-6 col-md-4 product-item">
             <div class="product-container">
                 <div class="row">
                     <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/iphone6.jpg"></a></div>
                 </div>
-                <div class="row" style="height: 49;"><div class="col-xs-8" style="height: 69px;">
+                <div class="row" style="height: 49;">
+                    <div class="col-xs-8" style="height: 69px;">
                         <h2><a href="#">iPhone 14s</a></h2>
-                    </div></div>
+                    </div>
+                </div>
                 <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><a class="small-text" href="#">82 reviews&nbsp; &nbsp;&nbsp;</a><i class="fa fa-facebook-square"></i></div>
-                <div class="row"><div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
                         <p class="product-description"><br>New iphone, good price!</p>
                         <div class="row">
                             <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
@@ -46,7 +50,8 @@
                                 <p class="product-price">$600</p>
                             </div>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-4 product-item">
@@ -54,11 +59,14 @@
                 <div class="row">
                     <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/mouse.jpeg"></a></div>
                 </div>
-                <div class="row"><div class="col-xs-8" style="height: 69px;">
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
                         <h2>Dell M300<a href="#"><br><br></a></h2>
-                    </div></div>
+                    </div>
+                </div>
                 <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><a class="small-text" href="#">10reviews</a></div>
-                <div class="row"><div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
                         <p class="product-description"><br>Bluetooth, good one</p>
                         <div class="row">
                             <div class="col-xs-6"><button class="btn btn-default" type="button">Add to Cart</button></div>
@@ -66,19 +74,19 @@
                                 <p class="product-price">$20</p>
                             </div>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-lg-3" style="font-size: 10px;">
-            <% if(user) { %>
-                <p>Welcome, <%= user.username %></p>
-                <a href="/logout" class="btn btn-light switchhover1" type="button" style="margin: 20px;">Logout</a>
+            <% if (user) { %>
+                <p>Welcome, <%= user.username %>!</p>
+                <a href="/users/logout">Logout</a>
             <% } else { %>
-                <a href="/login" class="btn btn-light switchhover1" type="button" style="margin: 20px;">Login</a>
-                <a href="/signup" class="btn btn-light switchhover1" type="button" style="margin: 20px;">Sign Up</a>
-            <% } %> 
-            <button class="btn btn-light switchhover1" type="button" style="margin: 20px;">MyApi</button>
-            <button class="btn btn-light switchhover1" type="button" style="margin: 20px;">Statistics</button></div>
+                <a class="btn btn-light switchhover1" href="/login" style="margin: 20px;">Login</a>
+                <a class="btn btn-light switchhover1" href="/signup" style="margin: 20px;">Sign-Up</a>
+            <% } %>
+        </div>
         <div class="col">
             <div class="btn-group btn-group-toggle" data-bs-toggle="buttons"></div>
         </div>
@@ -87,11 +95,14 @@
                 <div class="row">
                     <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/screen.jpg"></a></div>
                 </div>
-                <div class="row"><div class="col-xs-8" style="height: 69px;">
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
                         <h2><a href="#">Lcd Screen</a></h2>
-                    </div></div>
+                    </div>
+                </div>
                 <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><a class="small-text" href="#">10reviews</a></div>
-                <div class="row"><div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
                         <p class="product-description">4K</p>
                         <div class="row">
                             <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
@@ -99,7 +110,8 @@
                                 <p class="product-price">$100</p>
                             </div>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-4 product-item">
@@ -107,11 +119,14 @@
                 <div class="row">
                     <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/laptop.jpg"></a></div>
                 </div>
-                <div class="row"><div class="col-xs-8" style="height: 69px;">
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
                         <h2><a href="#">Dell Laptop</a></h2>
-                    </div></div>
+                    </div>
+                </div>
                 <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><a class="small-text" href="#">20reviews</a></div>
-                <div class="row"><div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
                         <p class="product-description">i7, 2 cores</p>
                         <div class="row">
                             <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
@@ -119,7 +134,8 @@
                                 <p class="product-price">$800</p>
                             </div>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-4 product-item">
@@ -127,11 +143,14 @@
                 <div class="row">
                     <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/ipad.jpg"></a></div>
                 </div>
-                <div class="row"><div class="col-xs-8" style="height: 69px;">
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
                         <h2><a href="#">Apple Ipad</a></h2>
-                    </div></div>
+                    </div>
+                </div>
                 <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><a class="small-text" href="#">10reviews</a></div>
-                <div class="row"><div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
                         <p class="product-description">This is our description</p>
                         <div class="row">
                             <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
@@ -139,7 +158,8 @@
                                 <p class="product-price">$600</p>
                             </div>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-4 product-item">
@@ -147,11 +167,14 @@
                 <div class="row">
                     <div class="col-md-12"><a class="product-image" href="#"><img src="assets/img/charge.webp"></a></div>
                 </div>
-                <div class="row"><div class="col-xs-8" style="height: 69px;">
+                <div class="row">
+                    <div class="col-xs-8" style="height: 69px;">
                         <h2><a href="#">Iphone Chrage</a></h2>
-                    </div></div>
+                    </div>
+                </div>
                 <div class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><a class="small-text" href="#">8reviews</a></div>
-                <div class="row"><div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
                         <p class="product-description">This is our description</p>
                         <div class="row">
                             <div class="col-xs-6"><button class="btn btn-default" type="button">Add to cart</button></div>
@@ -159,7 +182,8 @@
                                 <p class="product-price">$15</p>
                             </div>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
