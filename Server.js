@@ -6,6 +6,12 @@ const fs = require('fs');
 require('dotenv').config(); // Load environment variables from a .env file into process.env
 
 const session = require('express-session');
+const User = require('./models/userModel'); // Import User model
+const adminRoutes = require('./routes/adminRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const Product = require('./models/productModel');
+
+
 
 // Instantiate an express app
 const app = express();
@@ -63,6 +69,22 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
 
+/**************/
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
+
+app.use(async (req, res, next) => {
+  const products = await Product.find();
+  res.locals.products = products;
+  next();
+});
+/**************/
+
+//app.use('/cart', orderRoutes);
+//app.use('/order', orderRoutes);
+
 // Middleware to check if user is logged in
 function checkLoggedIn(req, res, next) {
   if (req.session.user) {
@@ -81,8 +103,10 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', userController.createUser);
 
+app.post('/cart/addToCart/:productId', userController.addToCart);
+
 app.get('/login', (req, res) => {
-  res.render('users/login');
+  res.render('users/login', { user: req.session.user });  // Pass user object here
 });
 
 // Protected route: only accessible if user is logged in
@@ -90,9 +114,21 @@ app.get('/admin', checkLoggedIn, checkAdmin, (req, res) => {
   res.render('users/admin');
 });
 
-app.get('/user', checkLoggedIn, (req, res) => {
-  res.render('user', { user: req.session.user });
+/***************************************************************************************/
+app.get('/user', checkLoggedIn, async (req, res) => {
+  const userWithOrders = await User.findById(req.session.user._id).populate({
+    path: 'orders',
+    populate: {
+      path: 'products',
+      model: 'Product'
+    }
+  });
+  res.render('users/user', { user: userWithOrders });
 });
+
+//This would populate the 'orders' field in the user document with
+//the actual order documents rather than just the IDs.
+/****************************************************************************************/
 
 // Middleware to check if user is an admin
 function checkAdmin(req, res, next) {
@@ -103,9 +139,17 @@ function checkAdmin(req, res, next) {
   }
 }
 
+app.use('/orders', orderRoutes);
+
+app.use('/admin', adminRoutes);
+
 app.get('/', (req, res) => {
   const user = req.session.user; // Get the user object from the session
   res.render('Store', { user }); // Pass the user object to the view
+});
+
+app.get('/myApiTemplate', function(req, res) {
+  res.render('myApiTemplate');
 });
 
 // Start the server and listen on port 5500
