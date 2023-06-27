@@ -14,13 +14,17 @@ const UserSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
-    }
+    },
+    cart: [{
+        type: mongoose.Schema.Types.ObjectId,
+        default: []
+    }],
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order'
+    }]
+    
 }, { collection: 'Users' }); // Set the collection name to 'Users'
-
-// Define static methods on the User model
-UserSchema.statics.findOne = function() {
-    // Implementation of the findOne method
-};
 
 const User = mongoose.model('User', UserSchema);
 
