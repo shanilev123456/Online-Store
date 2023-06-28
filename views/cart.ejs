@@ -1,13 +1,23 @@
-<!-- cart.ejs -->
-<% if (user.cart.length > 0) { %>
-    <% user.cart.forEach(async (productId) => { %>
-        <% const product = await Product.findById(productId).exec(); %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Your head elements -->
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <% if (cart.products.length > 0) { %>
+    <% cart.products.forEach((product) => { %>
+      <div>
         <h2><%= product.name %></h2>
-        <img src="<%= product.image %>">
-        <p><%= product.description %></p>
-        <p><%= product.price %></p>
+        <p>$<%= product.price %></p>
+        <!-- Add a remove from cart button here if needed -->
+      </div>
     <% }) %>
-    <a href="/cart/checkout">Checkout</a>
-<% } else { %>
-    <p>Your cart is empty</p>
-<% } %>
+    <form action="/checkout" method="post">
+        <button type="submit">Proceed to Checkout</button>
+      </form>
+  <% } else { %>
+    <p>Your cart is empty.</p>
+  <% } %>
+</body>
+</html>
