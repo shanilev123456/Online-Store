@@ -173,6 +173,31 @@ exports.addToCart = async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   };
+
+  exports.getCart = async (req, res) => {
+    try {
+      const user = await User.findById(req.session.user._id).populate('cart');
+      if (!user) {
+        return res.status(401).json({ error: 'User not logged in' });
+      }
+  
+      // Create a new cart array with full product information
+      let cart = [];
+      for (let product of user.cart) {
+        cart.push({
+          name: product.name,
+          price: product.price
+        });
+      }
+  
+      res.status(200).json({ cart: cart });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  
+  
   
 exports.checkout = async (req, res) => {
     try {
