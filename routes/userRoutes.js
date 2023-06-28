@@ -14,6 +14,9 @@ router.get('/:id', userController.logout);
 router.put('/:id', userController.updateUser);
 router.delete('/:id', userController.deleteUser);
 
-router.post('/cart/addToCart/:productId', userController.addToCart);
-router.post('/cart/checkout', userController.checkout);
+router.get('/checkout', userController.checkout);
+
+//router.get('/cart', userController.getCart);
+//router.post('/cart/addToCart/:productId', userController.addToCart);
+//router.get('/cart/checkout', userController.checkout);
 module.exports = router;
