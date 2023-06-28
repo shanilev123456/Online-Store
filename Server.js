@@ -6,17 +6,29 @@ const fs = require('fs');
 require('dotenv').config(); // Load environment variables from a .env file into process.env
 
 const session = require('express-session');
-const User = require('./models/userModel'); // Import User model
+
+// Import models
+const User = require('./models/userModel'); 
+const Product = require('./models/productModel');
+const order = require('./models/orderModel');
+
+// Import routes
+const cartRoutes = require('./routes/cartRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const orderRoutes = require('./routes/orderRoutes');
-const Product = require('./models/productModel');
-
+const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 // Instantiate an express app
 const app = express();
 
+// Import controllers
 const userController = require('./controllers/userController');
+const productController = require('./controllers/productController');
+const adminController = require('./controllers/adminController');
+const orderController = require('./controllers/orderController');
+const cartController = require('./controllers/cartController');
 
 app.use(
   session({
@@ -25,7 +37,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-
 
 app.use(
   "/css",
@@ -61,13 +72,14 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
-// Import routes
-const productRoutes = require('./routes/productRoutes');
-const userRoutes = require('./routes/userRoutes');
 
 // Use imported routes with base paths
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
+app.use('/cart', cartRoutes);
+app.use('/order', orderRoutes);
+app.use('/admin', adminRoutes);
+
 
 /**************/
 app.use((req, res, next) => {
@@ -81,9 +93,6 @@ app.use(async (req, res, next) => {
   next();
 });
 /**************/
-
-//app.use('/cart', orderRoutes);
-//app.use('/order', orderRoutes);
 
 // Middleware to check if user is logged in
 function checkLoggedIn(req, res, next) {
@@ -103,8 +112,6 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', userController.createUser);
 
-app.post('/cart/addToCart/:productId', userController.addToCart);
-
 app.get('/login', (req, res) => {
   res.render('users/login', { user: req.session.user });  // Pass user object here
 });
@@ -117,7 +124,7 @@ app.get('/admin', checkLoggedIn, checkAdmin, (req, res) => {
 /***************************************************************************************/
 app.get('/user', checkLoggedIn, async (req, res) => {
   const userWithOrders = await User.findById(req.session.user._id).populate({
-    path: 'orders',
+    path: 'order',
     populate: {
       path: 'products',
       model: 'Product'
@@ -139,9 +146,11 @@ function checkAdmin(req, res, next) {
   }
 }
 
-app.use('/orders', orderRoutes);
+app.post('/checkout', orderController.checkoutOrder);
 
-app.use('/admin', adminRoutes);
+app.get('/thank-you', (req, res) => {
+  res.render('thankYou');
+});
 
 app.get('/', (req, res) => {
   const user = req.session.user; // Get the user object from the session
