@@ -19,7 +19,7 @@ exports.checkoutOrder = async (req, res) => {
         // Calculate the total price
         let total = 0;
         for(let i=0; i<cart.products.length; i++){
-            total += cart.products[i].price; // Assuming your product model has a price field
+            total += cart.products[i].price; // Assuming product model has a price field
         }
 
         console.log('Total price calculated: ', total);
