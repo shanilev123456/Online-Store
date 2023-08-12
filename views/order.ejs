@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Your Orders</title>
+  <!-- Insert CSS and JavaScript Files Here -->
+</head>
+<body>
+  <h1>Your Orders</h1>
+  <ul>
+    <% orders.forEach(order => { %>
+      <li>
+        <h2>Order ID: <%= order._id %></h2>
+        <p>Date: <%= order.date %></p>
+        <p>Total: <%= order.total %></p>
+        <h3>Products:</h3>
+        <ul>
+          <% order.products.forEach(product => { %>
+            <li>
+              <h4><%= product.name %></h4>
+              <p>Price: <%= product.price %></p>
+              <p>Quantity: <%= product.quantity %></p>
+            </li>
+          <% }) %>
+        </ul>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

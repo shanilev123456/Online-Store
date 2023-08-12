@@ -1,0 +1,94 @@
+<html>
+  <body>
+    <h1>Products</h1>
+    <div class="ref-products"></div>
+    <h1>Cart</h1>
+    <div class="ref-cart"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $.ajax({
+          url: '/products',
+          type: 'GET',
+          success: function(response) {
+            var products = response.products;
+            var productsContainer = $('.ref-products');
+
+            products.forEach(function(product) {
+              var productHtml = `
+                <div>
+                  <h2>${product.name}</h2>
+                  <p>Price: $${product.price}</p>
+                  <p>Description: ${product.description}</p>
+                  <button class="add-to-cart" data-id="${product._id}">Add to Cart</button>
+                </div>
+              `;
+              productsContainer.append(productHtml);
+            });
+
+            $('.add-to-cart').click(function() {
+              var productId = $(this).data('id');
+
+              $.ajax({
+                url: '/user/cart/addToCart/' + productId,
+                type: 'POST',
+                success: function(response) {
+                  updateCart();
+                },
+                error: function(error) {
+                  console.log(error);
+                }
+              });
+            });
+
+            function updateCart() {
+              $.ajax({
+                url: '/user/cart',
+                type: 'GET',
+                success: function(response) {
+                  var cart = response.cart;
+                  var cartContainer = $('.ref-cart');
+                  cartContainer.empty();
+
+                  cart.forEach(function(item) {
+                    var cartItemHtml = `
+                      <div>
+                        <h2>${item.name}</h2>
+                        <p>Price: $${item.price}</p>
+                      </div>
+                    `;
+                    cartContainer.append(cartItemHtml);
+                  });
+
+                  cartContainer.append('<button id="checkout">Checkout</button>');
+                  $('#checkout').click(function() {
+                    $.ajax({
+                      url: '/user/cart/checkout',
+                      type: 'POST',
+                      success: function(response) {
+                        alert(response.message);
+                        updateCart();
+                      },
+                      error: function(error) {
+                        console.log(error);
+                      }
+                    });
+                  });
+                },
+                error: function(error) {
+                  console.log(error);
+                }
+              });
+            }
+
+            updateCart();
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

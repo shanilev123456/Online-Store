@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Pretty Product List</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/FontAwesome.css">
+    <link rel="stylesheet" href="/assets/css/Glyphicons%20Halflings.css">
+    <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/css/Pretty-Product-List.css">
+    <link rel="stylesheet" href="/assets/css/Animated-Type-Heading.css">
+    <link rel="stylesheet" href="/assets/css/Button-Hover-Animate.css">
+</head>
+
+<body>
+    <% if (user) { %>
+        <p>Welcome, <%= user.username %>!</p> <!-- updated line -->
+        <button onclick="location.href='/users/logout'">Logout</button>
+        <button onclick="location.href='/cart'">View Cart</button> 
+        <button onclick="location.href='/order/history'">History</button>
+    <% } %>
+
+    <div class="row product-list" style="margin: 15px;">
+        <% products.forEach((product) => { %>
+            <div class="col-sm-6 col-md-4 product-item">
+                <div class="product-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="product-image" href="#"><img src="/<%= product.image %>"></a>
+                        </div>
+                    </div>
+                    <div class="row" style="height: 49px;">
+                        <div class="col-xs-8" style="height: 69px;">
+                            <h2><a href="#"><%= product.name %></a></h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="product-description"><br><%= product.description %></p>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <!-- Added button with unique identifier -->
+                                    <<button class="btn btn-default add-to-cart" type="button" data-id="<%= product._id %>">Add to cart</button>
+                                </div>
+                                <div class="col-xs-6">
+                                    <p class="product-price">$<%= product.price %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".add-to-cart").click(function() {
+                var productId = $(this).data("id");
+                console.log("Product ID: " + productId); // Add console log to check productId
+                $.ajax({
+                    url: "/cart/" + productId, // Changed the URL to match your router configuration
+                    type: 'POST',
+                    success: function(result) {
+                        console.log(result); // Log the result object
+                        alert(result.message);
+                    },
+                    error: function(error) {
+                        console.log("Error: ", error); // Log any error during the ajax call
+                    }
+                });
+            });
+        });
+    </script>
+       
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/Animated-Type-Heading-type-headline.js"></script>
+</body>
+
+</html>

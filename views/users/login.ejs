@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>login form</title>
+    <link rel="stylesheet" href="users/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="users/assets/css/login-form-styles.css">
+    <link rel="stylesheet" href="users/assets/css/login-form.css">
+</head>
+
+<body>
+    <div class="container full-height">
+        <div class="row flex center v-center full-height">
+            <div class="col-sm-4 col-xs-8">
+                <div class="form-box">
+                    <form action="/users/login" method="POST">
+                        <fieldset>
+                            <legend>Signin</legend>
+                            <img id="avatar" class="avatar round" src="users/assets/img/avatar.png">
+                            <input class="form-control" type="text" id="username" name="username" placeholder="Username" required>
+                            <input class="form-control" type="password" id="password" name="password" placeholder="Password" required>
+                            <button class="btn btn-primary btn-block" type="submit" name="signup">Login</button>
+                          </fieldset>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="users/assets/js/jquery.min.js"></script>
+    <script src="users/assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
