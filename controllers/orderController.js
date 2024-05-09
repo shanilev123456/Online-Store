@@ -62,4 +62,21 @@ exports.getOrderHistory = async (req, res) => {
       res.status(500).send('Error retrieving order history');
     }
   };
+  exports.getGroupedOrders = async (req, res) => {
+    console.log("getGroupedOrders called!");  // <-- Add this
+    try {
+        const groupedOrders = await Order.aggregate([
+            {
+                $group: {
+                    _id: "$user",
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+
+        res.render('group', { groupedOrders: groupedOrders });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
   

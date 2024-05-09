@@ -20,16 +20,21 @@
 
 <body>
     <% if (user.isAdmin) { %>
-        <p>Welcome,Admin <%= user.username %>!</p> <!-- updated line -->
-        <button onclick="location.href='/users/logout'">Logout</button>
-        <button onclick="location.href='/cart'">View Cart</button> 
-        <button onclick="location.href='/order/history'">History</button>
-        <div class="col-lg-3 text-right" style="font-size: 10px;">
-        <a href="/MyApiTemplates" class="btn btn-light switchhover1" type="button" style="margin: 20px;">API</a>
-        <a href="/Statistics" class="btn btn-light switchhover1" type="button" style="margin: 20px;">Statistics</a>
+        <div style="text-align: center; font-weight: bold; margin-bottom: 20px;">
+          <p>Welcome, Admin <%= user.username %>!</p> <!-- updated line -->
         </div>
-    <% } %>
-
+        <div style="position: absolute; top: 0; left: 0;">
+          <button onclick="location.href='/users/logout'">Logout</button>
+        </div>
+        <div style="position: absolute; top: 0; right: 0;">
+          <button onclick="location.href='/cart'">View Cart</button>
+          <button onclick="location.href='/order/history'">History</button>
+        </div>
+        <div class="col-lg-3 text-right" style="font-size: 10px; position: absolute; top: 1; right: 0;">
+          <a href="/MyApiTemplate" class="btn btn-light switchhover1" type="button" style="margin: 20px;">API</a>
+          <a href="/Statistics" class="btn btn-light switchhover1" type="button" style="margin: 20px;">Statistics</a>
+        </div>
+      <% } %>
     <div class="row product-list" style="margin: 15px;">
         <% products.forEach((product) => { %>
             <div class="col-sm-6 col-md-4 product-item">

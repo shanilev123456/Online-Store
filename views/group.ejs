@@ -1,0 +1,6 @@
+<h1>Grouped Orders</h1>
+<ul>
+    <% groupedOrders.forEach(order => { %>
+        <li>User ID: <%= order._id %> - Number of Orders: <%= order.count %></li>
+    <% }); %>
+</ul>

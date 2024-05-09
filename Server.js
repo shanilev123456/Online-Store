@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config(); // Load environment variables from a .env file into process.env
-
 const session = require('express-session');
 
 // Import models
@@ -164,8 +163,6 @@ app.get('/myApiTemplate', function(req, res) {
 app.get('/Statistics', function(req, res) {
   res.render('Statistics');
 });
-
-
 // Start the server and listen on port 5500
 app.listen(5500, () => {
   console.log('Server is running on port 5500');
